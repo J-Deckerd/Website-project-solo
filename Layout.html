@@ -1,0 +1,61 @@
+<?php
+$user = current_user(); // auth.php-ból
+?>
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>RadioWave FM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="public/css/style.css">
+</head>
+<body>
+
+<header>
+    <div class="top-bar">
+        <div class="logo">RadioWave FM</div>
+
+        <div class="user-info">
+            <?php
+            if ($user) {
+                echo 'Bejelentkezett: ' .
+                     htmlspecialchars($user['lastname']) . ' ' .
+                     htmlspecialchars($user['firstname']) .
+                     ' (' . htmlspecialchars($user['login']) . ')';
+            } else {
+                echo 'Vendég';
+            }
+            ?>
+        </div>
+    </div>
+
+    <nav>
+        <ul class="main-menu">
+            <li><a href="index.php?page=home">Főoldal</a></li>
+            <li><a href="index.php?page=kepek">Képek</a></li>
+            <li><a href="index.php?page=kapcsolat">Kapcsolat</a></li>
+            <li><a href="index.php?page=crud">CRUD</a></li>
+
+            <?php
+            if ($user) {
+                echo '<li><a href="index.php?page=uzenetek">Üzenetek</a></li>';
+                echo '<li><a href="index.php?page=logout">Kilépés</a></li>';
+            } else {
+                echo '<li><a href="index.php?page=login">Belépés</a></li>';
+            }
+            ?>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <?php include __DIR__ . '/' . $view; ?>
+</main>
+
+<footer>
+    <p>© <?php echo date('Y'); ?> RadioWave FM – Online rádió</p>
+</footer>
+
+<script src="public/js/validation.js"></script>
+</body>
+</html>
